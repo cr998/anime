@@ -30,30 +30,6 @@ public class DescargaSeries {
      */
     public static void main(String[] args) {
         
-//        DownloadHandler down = new DownloadHandler();
-//        
-//
-//        try {
-//            Connection c = DriverManager.getConnection("jdbc:sqlite:data.db");
-//            Statement stmt = c.createStatement();
-//            String sql="SELECT id, url FROM Series WHERE descargada = 0 AND duracion <=20";
-//            ResultSet r = stmt.executeQuery(sql);
-//            int i=0;
-//            while(r.next()){
-//                i++;
-//                Serie s = new Serie(r.getInt("id"),r.getString("url"),true);
-//                System.out.println(s.getName());
-//                Descarga[] des = s.descargar(ruta);
-//                for (int j = 0; j < des.length; j++) {
-//                    down.addDownload(des[j]);
-//                }
-//            }
-//            
-//            down.start();
-//            
-//        } catch (SQLException ex) {
-//            Logger.getLogger(DownloadHandler.class.getName()).log(Level.SEVERE, null, ex);
-//        }
     }
-//
+
 }
