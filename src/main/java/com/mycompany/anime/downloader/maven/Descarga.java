@@ -53,6 +53,9 @@ public class Descarga extends Thread {
         this.dirsalida=dirsalida;
         gui = true;
     }
+    
+    
+    
 
     @Override
     public void run() {

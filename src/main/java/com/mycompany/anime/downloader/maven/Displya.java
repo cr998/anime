@@ -5,12 +5,15 @@
  */
 package com.mycompany.anime.downloader.maven;
 
+
+
 /**
  *
  * @author cr998
  */
 public class Displya extends javax.swing.JFrame {
 
+    
     /**
      * Creates new form Displya
      */
