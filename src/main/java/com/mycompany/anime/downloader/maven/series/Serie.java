@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.anime.downloader.maven;
+package com.mycompany.anime.downloader.maven.series;
 
+import com.mycompany.anime.downloader.maven.descarga.Descarga;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,14 +26,15 @@ public class Serie {
     private String url;
     private String[] categorias;
 
-    public Serie(int id,String url, boolean get) {
-        this.id=id;
-        this.url = url;
-        if (get) {
-            getData();
-        }
-    }
-
+    /**
+     * Método que convierte una cadena de la forma "yyyy-MM-dd HH:mm" a Date
+     * <PRE> Clase_Java cj = new Clase_Java();
+     * Date date = cj.StringToDate("2012-10-01 12:00")</PRE>
+     * @param id String que debe tener la forma "yyyy-MM-dd HH:mm"
+     * @return Date Un objeto Date con la fecha parseada
+     * @exception ParseException Error de parseo, ocurre cuando no se puede convertir un String a Date          
+     * @since incluido desde la version 1.0
+     */
     public Serie(int id,String url) {
         this.id=id;
         this.url = url;
@@ -54,12 +56,16 @@ public class Serie {
         } else {
             des=new Descarga[urlcapitulo.length];
             for (int i = 0; i < urlcapitulo.length; i++) {
-                des[i]=new Descarga(urlcapitulo[i], dirsalida+this.name+"\\");
+                //des[i]=new Descarga(urlcapitulo[i], dirsalida+this.name+"\\");
             }
         }
         return des;
     }
 
+    
+    /*
+    *
+    */
     public void getData() {
         try {
             Document doc = Jsoup.connect(url).userAgent("mozilla").get();
@@ -113,3 +119,4 @@ public class Serie {
     
 
 }
+    
