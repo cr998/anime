@@ -5,6 +5,7 @@
  */
 package com.mycompany.anime.downloader.maven.graphics;
 
+import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -29,19 +30,26 @@ public class Displya extends javax.swing.JFrame {
     public Displya() throws MalformedURLException, IOException {
         initComponents();
         String path = "http://www.animeyt.tv/files/img/series/s_3167_poster.jpeg";
-        URL url = new URL(path);
-        HttpURLConnection connection = (HttpURLConnection) url
-        .openConnection();
-connection.setRequestProperty(
-    "User-Agent",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31");
-
-        BufferedImage image = ImageIO.read(connection.getInputStream());
-        ImageIcon imageic = new ImageIcon(image);
-        JLabel label = new JLabel(imageic);
-        label.setSize(imageic.getIconWidth(), imageic.getIconHeight());
-        this.zonaBusqueda.add(label);
-        //this.Descargas.add(new Imagen());
+//        URL url = new URL(path);
+//        HttpURLConnection connection = (HttpURLConnection) url
+//        .openConnection();
+//connection.setRequestProperty(
+//    "User-Agent",
+//    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31");
+//
+//        BufferedImage image = ImageIO.read(connection.getInputStream());
+//        ImageIcon imageic = new ImageIcon(image);
+//        JLabel label = new JLabel(imageic);
+//        label.setSize(imageic.getIconWidth(), imageic.getIconHeight());
+//        this.zonaBusqueda.add(label);
+        this.Descargas.setLayout(new GridLayout(3,2));
+        this.Descargas.add(new Imagen(path));
+        this.Descargas.add(new Imagen(path));
+        this.Descargas.add(new Imagen(path));
+        this.Descargas.add(new Imagen(path));
+        this.Descargas.add(new Imagen(path));
+        
+        
     }
 
     /**
@@ -62,6 +70,7 @@ connection.setRequestProperty(
         Descargas = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Anime Downloader");
 
         areatextoBuscador.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         areatextoBuscador.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
