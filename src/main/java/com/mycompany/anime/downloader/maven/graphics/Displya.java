@@ -5,17 +5,21 @@
  */
 package com.mycompany.anime.downloader.maven.graphics;
 
+import com.mycompany.anime.downloader.maven.series.ScanSeries;
+import com.mycompany.anime.downloader.maven.series.Serie;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-
-
 
 /**
  *
@@ -23,33 +27,11 @@ import javax.swing.JLabel;
  */
 public class Displya extends javax.swing.JFrame {
 
-    
     /**
      * Creates new form Displya
      */
     public Displya() throws MalformedURLException, IOException {
         initComponents();
-        String path = "http://www.animeyt.tv/files/img/series/s_3167_poster.jpeg";
-//        URL url = new URL(path);
-//        HttpURLConnection connection = (HttpURLConnection) url
-//        .openConnection();
-//connection.setRequestProperty(
-//    "User-Agent",
-//    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31");
-//
-//        BufferedImage image = ImageIO.read(connection.getInputStream());
-//        ImageIcon imageic = new ImageIcon(image);
-//        JLabel label = new JLabel(imageic);
-//        label.setSize(imageic.getIconWidth(), imageic.getIconHeight());
-//        this.zonaBusqueda.add(label);
-        this.Descargas.setLayout(new GridLayout(3,2));
-        this.Descargas.add(new Imagen(path));
-        this.Descargas.add(new Imagen(path));
-        this.Descargas.add(new Imagen(path));
-        this.Descargas.add(new Imagen(path));
-        this.Descargas.add(new Imagen(path));
-        
-        
     }
 
     /**
@@ -87,15 +69,17 @@ public class Displya extends javax.swing.JFrame {
             }
         });
 
+        zonaBusqueda.setAutoscrolls(true);
+
         javax.swing.GroupLayout zonaBusquedaLayout = new javax.swing.GroupLayout(zonaBusqueda);
         zonaBusqueda.setLayout(zonaBusquedaLayout);
         zonaBusquedaLayout.setHorizontalGroup(
             zonaBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 687, Short.MAX_VALUE)
         );
         zonaBusquedaLayout.setVerticalGroup(
             zonaBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 424, Short.MAX_VALUE)
+            .addGap(0, 436, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout BuscadorLayout = new javax.swing.GroupLayout(Buscador);
@@ -105,12 +89,11 @@ public class Displya extends javax.swing.JFrame {
             .addGroup(BuscadorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(BuscadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BuscadorLayout.createSequentialGroup()
-                        .addGap(0, 352, Short.MAX_VALUE)
+                    .addComponent(zonaBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(BuscadorLayout.createSequentialGroup()
                         .addComponent(areatextoBuscador, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botonBuscador))
-                    .addComponent(zonaBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(botonBuscador)))
                 .addContainerGap())
             .addComponent(jSeparator1)
         );
@@ -123,9 +106,9 @@ public class Displya extends javax.swing.JFrame {
                     .addComponent(botonBuscador, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(zonaBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(zonaBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Buscador", Buscador);
@@ -159,13 +142,37 @@ public class Displya extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void botonBuscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscadorActionPerformed
+
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                zonaBusqueda.removeAll();
+                String buscar = areatextoBuscador.getText();
+
+                try {
+                    ArrayList<Serie> lista = ScanSeries.search(buscar);
+                    GridLayout gl = new GridLayout(lista.size(),1, 20, 40);
+                    zonaBusqueda.setLayout(gl);
+                    for (Serie serie : lista) {
+                        serie.getData();
+                        zonaBusqueda.add(new Imagen(serie.getUrlimagen()));
+                        
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(Displya.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                zonaBusqueda.repaint();
+            }
+        };
+
+        t.start();
+
+    }//GEN-LAST:event_botonBuscadorActionPerformed
+
     private void areatextoBuscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_areatextoBuscadorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_areatextoBuscadorActionPerformed
-
-    private void botonBuscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscadorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonBuscadorActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

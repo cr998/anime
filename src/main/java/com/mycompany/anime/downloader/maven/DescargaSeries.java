@@ -6,7 +6,10 @@
 package com.mycompany.anime.downloader.maven;
 
 import com.mycompany.anime.downloader.maven.graphics.Displya;
+import com.mycompany.anime.downloader.maven.series.ScanSeries;
+import com.mycompany.anime.downloader.maven.series.Serie;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,6 +21,7 @@ public class DescargaSeries {
      */
     public static void main(String[] args) throws Exception {
         new Displya().setVisible(true);
+
     }
 
 }

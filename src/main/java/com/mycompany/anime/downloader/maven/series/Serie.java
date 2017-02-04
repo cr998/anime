@@ -7,10 +7,12 @@ package com.mycompany.anime.downloader.maven.series;
 
 import com.mycompany.anime.downloader.maven.descarga.Descarga;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 /**
@@ -20,26 +22,24 @@ import org.jsoup.select.Elements;
 public class Serie {
     
     private int id;
+    private String urlimagen;
     private String name;
-    private String urlcapitulo[];
+    private ArrayList<String> urlcapitulo;
     private int capitulos;
     private String url;
-    private String[] categorias;
+    private ArrayList<String> categorias;
+    private String estado;
 
-    /**
-     * Método que convierte una cadena de la forma "yyyy-MM-dd HH:mm" a Date
-     * <PRE> Clase_Java cj = new Clase_Java();
-     * Date date = cj.StringToDate("2012-10-01 12:00")</PRE>
-     * @param id String que debe tener la forma "yyyy-MM-dd HH:mm"
-     * @return Date Un objeto Date con la fecha parseada
-     * @exception ParseException Error de parseo, ocurre cuando no se puede convertir un String a Date          
-     * @since incluido desde la version 1.0
-     */
+    
     public Serie(int id,String url) {
         this.id=id;
         this.url = url;
     }
 
+    public Serie(String url) {
+        this.url = url;
+    }
+    
     public boolean isDescargable() {
         if (capitulos < 30) {
             return true;
@@ -54,8 +54,8 @@ public class Serie {
         if (urlcapitulo == null) {
             System.out.println("olle, no has obtenido los datos antes de descargar");
         } else {
-            des=new Descarga[urlcapitulo.length];
-            for (int i = 0; i < urlcapitulo.length; i++) {
+            des=new Descarga[urlcapitulo.size()];
+            for (int i = 0; i < urlcapitulo.size(); i++) {
                 //des[i]=new Descarga(urlcapitulo[i], dirsalida+this.name+"\\");
             }
         }
@@ -69,52 +69,71 @@ public class Serie {
     public void getData() {
         try {
             Document doc = Jsoup.connect(url).userAgent("mozilla").get();
-
-            this.name = "";
-            for (String string : url.split("/")[3].split("-")) {
-                name += string + " ";
+            
+            this.name=doc.select(".serie-header__title").text();
+            this.capitulos=doc.select(".serie-capitulos__list__item").size();
+            this.categorias = new ArrayList<String>();
+            for (Element e : doc.select(".serie-header__genero:lt(1) > li > a")){
+                this.categorias.add(e.text());
             }
-
-            Elements vector = doc.getElementsByClass("serie-capitulos__list__item");
-            urlcapitulo = new String[vector.size()];
-            capitulos = urlcapitulo.length;
+            this.urlcapitulo=new ArrayList<String>();
+            for (Element e : doc.select(".serie-capitulos__list__item > a")){
+                this.urlcapitulo.add(e.attr("href"));
+            }
+            this.estado=doc.select(".serie-header__genero:lt(2) > li > a").text();
+            this.urlimagen=doc.select(".serie-header__img").attr("src");
             
             
-            for (int i = 0; i < vector.size(); i++) {
-                urlcapitulo[vector.size() - i - 1] = (String) vector.get(i).child(1).attr("href");
-                
-            }
-
-
-            //name=doc.getElementsByClass("serie-header__title").html();
-//            Elements vector=doc.getElementsByClass("serie-capitulos__list__item");
-//            for (int i = 0; i < vector.toArray().length; i++) {
-//                System.out.println(vector.get(i).html());
-//            }
         } catch (IOException ex) {
             Logger.getLogger(Serie.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public String getUrlimagen() {
+        return urlimagen;
+    }
+
+    public void setUrlimagen(String urlimagen) {
+        this.urlimagen = urlimagen;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public String getName() {
         return name;
     }
 
-    public String[] getUrlcapitulo() {
-        return urlcapitulo;
-    }
-
     public int getCapitulos() {
         return capitulos;
     }
 
-    public String[] getCategorias() {
+    public ArrayList<String> getUrlcapitulo() {
+        return urlcapitulo;
+    }
+
+    public ArrayList<String> getCategorias() {
         return categorias;
     }
 
     public String getUrl() {
         return url;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb=new StringBuilder();
+        for (String cat : this.categorias) {
+            sb.append(" "+cat+" ");
+        }
+        return this.name+"  ->  "+sb.toString();
+    }
+  
     
     
 
