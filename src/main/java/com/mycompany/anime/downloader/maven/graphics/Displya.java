@@ -47,6 +47,7 @@ public class Displya extends javax.swing.JFrame {
         Buscador = new javax.swing.JPanel();
         areatextoBuscador = new javax.swing.JTextField();
         botonBuscador = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
         zonaBusqueda = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         Descargas = new javax.swing.JPanel();
@@ -75,12 +76,14 @@ public class Displya extends javax.swing.JFrame {
         zonaBusqueda.setLayout(zonaBusquedaLayout);
         zonaBusquedaLayout.setHorizontalGroup(
             zonaBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 687, Short.MAX_VALUE)
+            .addGap(0, 695, Short.MAX_VALUE)
         );
         zonaBusquedaLayout.setVerticalGroup(
             zonaBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 436, Short.MAX_VALUE)
+            .addGap(0, 502, Short.MAX_VALUE)
         );
+
+        jScrollPane1.setViewportView(zonaBusqueda);
 
         javax.swing.GroupLayout BuscadorLayout = new javax.swing.GroupLayout(Buscador);
         Buscador.setLayout(BuscadorLayout);
@@ -88,14 +91,16 @@ public class Displya extends javax.swing.JFrame {
             BuscadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BuscadorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(BuscadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(zonaBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(BuscadorLayout.createSequentialGroup()
-                        .addComponent(areatextoBuscador, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botonBuscador)))
-                .addContainerGap())
+                .addComponent(areatextoBuscador, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonBuscador)
+                .addGap(338, 338, 338))
             .addComponent(jSeparator1)
+            .addGroup(BuscadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(BuscadorLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 687, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         BuscadorLayout.setVerticalGroup(
             BuscadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,9 +111,12 @@ public class Displya extends javax.swing.JFrame {
                     .addComponent(botonBuscador, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(zonaBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(448, Short.MAX_VALUE))
+            .addGroup(BuscadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BuscadorLayout.createSequentialGroup()
+                    .addContainerGap(72, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
         );
 
         jTabbedPane1.addTab("Buscador", Buscador);
@@ -180,6 +188,7 @@ public class Displya extends javax.swing.JFrame {
     private javax.swing.JPanel Descargas;
     private javax.swing.JTextField areatextoBuscador;
     private javax.swing.JButton botonBuscador;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel zonaBusqueda;
